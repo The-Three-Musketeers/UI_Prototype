@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class KeyListener : MonoBehaviour {
+
+	public static bool clicked = false;
 	
 	// Update is called once per frame
 	void Update () {
@@ -13,5 +15,16 @@ public class KeyListener : MonoBehaviour {
                 Application.LoadLevel(Application.loadedLevel - 1);
             }
         }
+		if (Input.GetKeyDown(KeyCode.A)){
+			Selector.prev_option();
+		}
+		if (Input.GetKeyDown(KeyCode.D)){
+			Selector.next_option();
+		}
+		if (Input.GetKeyDown(KeyCode.S)) {
+			clicked = true;
+		} else {
+			clicked = false;
+		}
 	}
 }
