@@ -4,6 +4,8 @@ using System.Collections;
 public class KeyListener : MonoBehaviour {
 
 	public static bool clicked = false;
+	public static bool fuel_selected = false;
+	public static bool angle_selected = true;
 	
 	// Update is called once per frame
 	void Update () {
@@ -25,6 +27,16 @@ public class KeyListener : MonoBehaviour {
 			clicked = true;
 		} else {
 			clicked = false;
+		}
+		if (Input.GetKey(KeyCode.F)) {
+			fuel_selected = true;
+		} else {
+			fuel_selected = false;
+		}
+		if (Input.GetKey(KeyCode.G)) {
+			angle_selected = true;
+		} else {
+			angle_selected = false;
 		}
 	}
 }
