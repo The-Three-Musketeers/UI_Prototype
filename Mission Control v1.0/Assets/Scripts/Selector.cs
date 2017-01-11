@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//This script provides functionality for manually selecting from three
+//options. It features wrap-around handling.
+
 public class Selector : MonoBehaviour {
 
 	public static int option_selected = 1;

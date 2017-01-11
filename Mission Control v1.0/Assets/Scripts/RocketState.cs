@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
+//This class keeps track of the different variables associated with the rocket,
+//namely its fuel level and angle.
+
 public class RocketState : MonoBehaviour {
 
 	public float fuel = 100;

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//This script handles screen changes dynamically. It was based heavily off of code found
+//on the topic in one of Unity's officical tutorials.
+
 public class ScreenChanges : MonoBehaviour {
 
     public Texture2D fadeOutTexture;
@@ -28,18 +31,21 @@ public class ScreenChanges : MonoBehaviour {
         BeginFade(-1);
     }
 
+	//Go to the next scene
 	public void NextScene() {
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
         Application.LoadLevel(Application.loadedLevel + 1);
     }
 
+	//Go to the last scene
     public void LastScene() {
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
         Application.LoadLevel(Application.loadedLevel - 1);
     }
 
+	//Go to a specific scene by name
     public void SpecificScene(string name) {
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));

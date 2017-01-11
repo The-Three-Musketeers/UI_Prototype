@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//This script listens for keys and sends out signals to control
+//the game state appropriately.
+
 public class KeyListener : MonoBehaviour {
 
 	public static bool clicked = false;
@@ -8,6 +11,16 @@ public class KeyListener : MonoBehaviour {
 	public static bool angle_selected = true;
 	
 	// Update is called once per frame
+	//The controls are as follows:
+	//Q - Quit the Application
+	//Left Arrow - Go to the previous screen in the sequence
+	//A - Left option button
+	//D - Right option button
+	//S - Select option button
+	//F - Hold to select the fuel on the gameplay screen
+	//G - Hold to select the angle on the gameplay screen
+	//Up Arrow - See 'Manual_Slider.cs' for details
+	//Down Arrow - Ditto
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Q)){
             Application.Quit();
@@ -24,19 +37,19 @@ public class KeyListener : MonoBehaviour {
 			Selector.next_option();
 		}
 		if (Input.GetKeyDown(KeyCode.S)) {
-			clicked = true;
+			GameState.click();
 		} else {
-			clicked = false;
+			GameState.unclick ();
 		}
 		if (Input.GetKey(KeyCode.F)) {
-			fuel_selected = true;
+			GameState.select_fuel ();
 		} else {
-			fuel_selected = false;
+			GameState.unselect_fuel ();
 		}
 		if (Input.GetKey(KeyCode.G)) {
-			angle_selected = true;
+			GameState.select_angle ();
 		} else {
-			angle_selected = false;
+			GameState.unselect_angle ();
 		}
 	}
 }

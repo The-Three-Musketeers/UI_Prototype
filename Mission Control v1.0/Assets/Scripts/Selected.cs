@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//This script handles how a button should behave when it is selected, specifically that it should enlarge and wait
+//to be clicked, and how it should behave when it is not selected, specifially that it should do nothing.
+
 public class Selected : MonoBehaviour {
 
 	public int selection;
