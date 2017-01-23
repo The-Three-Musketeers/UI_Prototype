@@ -7,22 +7,22 @@ using UnityEngine.UI;
 
 public class Manual_Click : MonoBehaviour {
 
-	public static string name = "Button";
+	public static string buttonName = "Button";
 	
 	// Update is called once per frame
 	void Update () {
 		if (GameState.clicked) {
-			GameObject.Find (name).GetComponent<Button> ().onClick.Invoke ();
+			GameObject.Find (buttonName).GetComponent<Button> ().onClick.Invoke ();
 			reset ();
 		}
 	}
 
 	public static void set_name (string new_name) {
-		name = new_name;
+		buttonName = new_name;
 	}
 
 	public static void reset () {
-		name = "Button";
+		buttonName = "Button";
 		Selector.reset ();
 	}
 }
