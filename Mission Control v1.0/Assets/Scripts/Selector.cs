@@ -26,8 +26,8 @@ public class Selector : MonoBehaviour {
 		}
 	}
 
-	public static void reset() {
-		option_selected = 1;
-	}
-
+    public static void reset()
+    {
+        option_selected = 1;
+    }
 }

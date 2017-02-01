@@ -8,7 +8,6 @@ public class GameState : MonoBehaviour {
 
 	public static string mission;
 	public static string rocket_color;
-	public static bool clicked = false;
 	public static bool fuel_selected = false;
 	public static bool angle_selected = false;
 
@@ -26,14 +25,6 @@ public class GameState : MonoBehaviour {
 
 	public void set_rocket_color(string new_rocket_color) {
 		rocket_color = new_rocket_color;
-	}
-
-	public static void click() {
-		clicked = true;
-	}
-
-	public static void unclick() {
-		clicked = false;
 	}
 
 	public static void select_fuel() {

@@ -9,12 +9,11 @@ using ArduinoNet;
 public class KeyListener : MonoBehaviour {
 
     //System state variables for UI
-    public static bool clicked = false;
     public static bool fuel_selected = false;
     public static bool angle_selected = false;
 
     //Serial initialization
-    public static Serial serial = new Serial("COM3");
+    public static Serial serial = Serial.Connect("COM3");
 
     // Update is called once per frame
     //The controls are as follows:
@@ -29,7 +28,7 @@ public class KeyListener : MonoBehaviour {
     //Down Arrow - Ditto
 
     void Start() {
-        serial.Connect();
+        Manual_Click clicker = new Manual_Click();
         serial.OnButtonPressed += Serial_OnButtonPressed;
     }
 
@@ -49,10 +48,7 @@ public class KeyListener : MonoBehaviour {
             Selector.next_option();
         }
         if (Input.GetKeyDown(KeyCode.S)) {
-            GameState.click();
-        }
-        else {
-            GameState.unclick();
+            Manual_Click.click();
         }
         if (Input.GetKey(KeyCode.F)) {
             GameState.select_fuel();
@@ -70,7 +66,22 @@ public class KeyListener : MonoBehaviour {
 
     private void Serial_OnButtonPressed(object sender, ArduinoEventArg arg)
     {
-        UnityMainThreadDispatcher.Instance().Enqueue(() => Application.LoadLevel(Application.loadedLevel - 1));
+        if (arg.Value == 0)
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() => Manual_Click.click());
+        }
+        if (arg.Value == 1)
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() => Selector.prev_option());
+        }
+        if (arg.Value == 2)
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() => Selector.next_option());
+        }
+        if (arg.Value == 3)
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() => Application.Quit());
+        }
     }
 }
 

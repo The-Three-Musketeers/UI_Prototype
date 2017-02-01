@@ -36,6 +36,7 @@ public class ScreenChanges : MonoBehaviour {
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
         Application.LoadLevel(Application.loadedLevel + 1);
+        Manual_Click.reset();
     }
 
 	//Go to the last scene

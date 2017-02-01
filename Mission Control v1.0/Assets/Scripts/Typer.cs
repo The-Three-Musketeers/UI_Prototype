@@ -27,7 +27,6 @@ public class Typer : MonoBehaviour {
 		//For every character in the specified text, add it to the Text object and wait
 		foreach (char letter in text_transcript.ToCharArray()) {
 			text_object.text += letter;
-			print (letter);
 			yield return new WaitForSeconds (delay_time);
 		}
 	}
