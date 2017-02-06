@@ -28,8 +28,10 @@ public class KeyListener : MonoBehaviour {
     //Down Arrow - Ditto
 
     void Start() {
-        Manual_Click clicker = new Manual_Click();
-        serial.OnButtonPressed += Serial_OnButtonPressed;
+        if (serial != null)
+        {
+            serial.OnButtonPressed += Serial_OnButtonPressed;
+        }
     }
 
     void Update() {
