@@ -71,7 +71,6 @@ public class ScreenChanges : MonoBehaviour {
 
     //Change Music when you get to the gameplay
     private void changeMusic() {
-        print(Application.loadedLevelName);
         if (Application.loadedLevelName == "SelectRocketScreen")
         {
             Destroy(music);
