@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 //This script handles screen changes dynamically. It was based heavily off of code found
 //on the topic in one of Unity's officical tutorials.
 
-public class ScreenChanges : MonoBehaviour {
+public class ScreenChanges : MonoBehaviour
+{
 
     public Texture2D fadeOutTexture;
     public AudioSource audio;
@@ -19,59 +20,68 @@ public class ScreenChanges : MonoBehaviour {
     {
         audio = GameObject.Find("Audio Source").GetComponent<AudioSource>();
         music = GameObject.Find("Music").GetComponent<AudioSource>();
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
         DontDestroyOnLoad(audio);
         DontDestroyOnLoad(music);
     }
 
-    void OnGUI() {
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        BeginFade(-1);
+    }
+
+    void OnGUI()
+    {
         alpha += fadeDir * fadeSpeed * Time.deltaTime;
         alpha = Mathf.Clamp01(alpha);
 
         GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
         GUI.depth = drawDepth;
-        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeOutTexture);
+        //GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeOutTexture);
     }
 
-    public float BeginFade(int direction) {
+    public float BeginFade(int direction)
+    {
         fadeDir = direction;
         return (fadeSpeed);
     }
 
-    public void OnLevelWasLoaded() {
-        BeginFade(-1);
-    }
 
     //Go to the next scene
-    public void NextScene() {
+    public void NextScene()
+    {
         audio.Play();
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
-        Application.LoadLevel(Application.loadedLevel + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         Manual_Click.reset();
         changeMusic();
     }
 
     //Go to the last scene
-    public void LastScene() {
+    public void LastScene()
+    {
         audio.Play();
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
-        Application.LoadLevel(Application.loadedLevel - 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1); ;
         changeMusic();
     }
 
     //Go to a specific scene by name
-    public void SpecificScene(string name) {
+    public void SpecificScene(string name)
+    {
         audio.Play();
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
-        Application.LoadLevel(name);
+        SceneManager.LoadScene(name);
         changeMusic();
     }
 
     //Change Music when you get to the gameplay
-    private void changeMusic() {
-        if (Application.loadedLevelName == "SelectRocketScreen")
+    private void changeMusic()
+    {
+        if (SceneManager.GetActiveScene().name == "SelectRocketScreen")
         {
             Destroy(music);
             music = GameObject.Find("Music").GetComponent<AudioSource>();
