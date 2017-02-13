@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class RocketState : MonoBehaviour {
 
-	public float fuel = 100;
-	public float angle = 180;
+	public static float fuel = 500;
+	public static float angle = 60;
 
 	const float max_fuel = 100;
 	const float max_angle = 180;

@@ -5,8 +5,9 @@ using System;
 
 public class RocketBehavior : MonoBehaviour {
 
-	public ParticleSystem particleSyst = null;
-	public ParticleSystem particleSyst2 = null;
+	//public ParticleSystem particleSyst = null;
+	//public ParticleSystem particleSyst2 = null;
+	public Transform cam = null; 
 
 	int numFuelPods = 3;
 	int fuelPos = 0;
@@ -18,25 +19,47 @@ public class RocketBehavior : MonoBehaviour {
 	Vector3 prevPrevPos = new Vector3 (0, 0, 0);
 	float rocketX = 0;
 	float rocketY = 0;
+	float rocketZ = 0;
 	float initialX = 0;
 	float initialY = 0;
 
-	float velocity = 100;
+	float velocity = 100;//RocketState.fuel;
 
-	float angleRad = 70 * ((float)Math.PI) / 180;
-	float currAngle =  70 * ((float)Math.PI) / 180;
+	//float angleRad = 60 * ((float)Math.PI) / 180;//RocketState.angle * ((float)Math.PI) / 180;
+	//float currAngle =  60 * ((float)Math.PI) / 180;//RocketState.angle * ((float)Math.PI) / 180;
+	float angleRad = 0f;
+	float currAngle = 0f;
 		
-	float time = 0;
-	float timeMult = 0.001f;
+	float time = 0f;
+	float timeMult = 0f;
 
 	// Update is called once per frame
 	void FixedUpdate () {
 		// Listens for lift off key
 		if (Input.GetKeyDown(KeyCode.Return)) {
+			
+
 			Debug.Log("Lift off!!!");
 			launch = true;
-			particleSyst.Play();
-			particleSyst2.Play ();
+			//particleSyst.Play();
+			//particleSyst2.Play ();
+			initialX = transform.position.x;
+			initialY = transform.position.y;
+			rocketX = transform.position.x;
+			rocketY = transform.position.y;
+			rocketZ = transform.position.z;
+
+			velocity = RocketState.fuel * 5;
+			angleRad = RocketState.angle * ((float)Math.PI) / 180;
+			currAngle = RocketState.angle * ((float)Math.PI) / 180;
+			Debug.Log (RocketState.angle.ToString ());
+			Debug.Log (RocketState.fuel.ToString ());
+
+			//Vector3 yTarget = Camera.main.transform.forward - (transform.forward * Vector3.Dot(Camera.transform.forward, transform.forward));
+			// Find the needed rotation to rotate y to y-target
+			//Quaternion desiredRotation = Quaternion.LookRotation(transform.forward, yTarget);
+			// Apply that rotation
+			//transform.rotation = desiredRotation;
 		}
 
 		// Handles moving rocket
@@ -45,26 +68,12 @@ public class RocketBehavior : MonoBehaviour {
 			Vector3 move = trajectory (); 
 			transform.position = move;
 
-
-			//float ang = Math.Cosh (dVector.x);
-			//currAngle = (float)(Math.Cosh (rocketX / (velocity * time))) * (180.0f/(float)Math.PI);
-			//transform.rotation = Quaternion.LookRotation(new Vector3((float)Math.Cos(currAngle),(float)Math.Sin(currAngle),0.0f));
-			// update orientation of rocket
-			//Vector3 directionVector = (new Vector3(0,1,0)) + (prevPos - transform.position).normalized;
-			//Vector3 directionVector = transform.position;
-			//Quaternion toRotation = Quaternion.FromToRotation(transform.up, directionVector);
-			//transform.Rotate (new Vector3 (90, 0, 0));
 			rotation();
 
-
-
-
-			//transform.Rotate (0, 0, currAngle, Space.World);
-			//transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 0.1f * Time.time);
 			// update time
 			time += Time.deltaTime * timeMult;
-			if (timeMult < 1) {
-				timeMult += 0.001f;
+			if (timeMult < 4) {
+				timeMult += 0.01f;
 			}
 			// update position variables
 			prevPrevPos = prevPos;
@@ -93,10 +102,10 @@ public class RocketBehavior : MonoBehaviour {
 		Quaternion vQ = Quaternion.LookRotation (Vector3.forward, dVector);
 		Vector3 toVec = vQ.ToEulerAngles();
 		if (time < 1) {
-			Debug.Log (time.ToString());
 			return;
 		} else if (Vector3.Distance(transform.eulerAngles, toVec) > 0.01f) {
 			transform.rotation = Quaternion.Lerp(transform.rotation, vQ, 0.5f*Time.deltaTime);
+			//transform.Rotate(0,0,5);
 		} else {
 			transform.rotation = vQ;
 		}
@@ -114,7 +123,7 @@ public class RocketBehavior : MonoBehaviour {
 	Vector3 trajectory() {
 		rocketX = initialX + velocity * ((float)Math.Cos(angleRad)) * time;
 		rocketY = (float) (initialY + velocity * Math.Sin(angleRad) * time - 0.5 * 9.8 * time * time);
-		return new Vector3(rocketX,rocketY,0);
+		return new Vector3(rocketX,rocketY,rocketZ);
 	}
 
 	// Use this for initialization
