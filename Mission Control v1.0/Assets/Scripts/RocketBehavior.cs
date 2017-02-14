@@ -5,15 +5,14 @@ using System;
 
 public class RocketBehavior : MonoBehaviour {
 
-	//public ParticleSystem particleSyst = null;
-	//public ParticleSystem particleSyst2 = null;
-	public Transform cam = null; 
-
+    //public ParticleSystem particleSyst = null;
+    //public ParticleSystem particleSyst2 = null;
+    public Transform cam = null;
 	int numFuelPods = 3;
 	int fuelPos = 0;
 	float moveSpeed = 5.0f;
 
-	bool launch = false;
+	public static bool launch = false;
 
 	Vector3 prevPos = new Vector3 (0, 0, 0);
 	Vector3 prevPrevPos = new Vector3 (0, 0, 0);
@@ -64,6 +63,8 @@ public class RocketBehavior : MonoBehaviour {
 
 		// Handles moving rocket
 		if (launch == true) {
+            //Switch the GUI into Launch mode
+            GUISwitch.launch_mode();
 			// update position of rocket
 			Vector3 move = trajectory (); 
 			transform.position = move;
@@ -105,8 +106,9 @@ public class RocketBehavior : MonoBehaviour {
 			return;
 		} else if (Vector3.Distance(transform.eulerAngles, toVec) > 0.01f) {
 			transform.rotation = Quaternion.Lerp(transform.rotation, vQ, 0.5f*Time.deltaTime);
-			//transform.Rotate(0,0,5);
-		} else {
+            GameObject.Find("HUD").transform.forward = cam.forward;
+            //transform.Rotate(0,0,5);
+        } else {
 			transform.rotation = vQ;
 		}
 	}
