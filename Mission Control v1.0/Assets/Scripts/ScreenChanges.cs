@@ -8,13 +8,13 @@ public class ScreenChanges : MonoBehaviour
 {
 
     public Texture2D fadeOutTexture;
-    public AudioSource audio;
-    public AudioSource music;
-    public float fadeSpeed = 0.8f;
+    public static AudioSource audio;
+    public static AudioSource music;
+    public static float fadeSpeed = 0.8f;
 
-    private int drawDepth = -1000;
+    private static int drawDepth = -1000;
     private float alpha = 1.0f;
-    private int fadeDir = -1;
+    private static int fadeDir = -1;
 
     void Start()
     {
@@ -40,7 +40,7 @@ public class ScreenChanges : MonoBehaviour
         //GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeOutTexture);
     }
 
-    public float BeginFade(int direction)
+    public static float BeginFade(int direction)
     {
         fadeDir = direction;
         return (fadeSpeed);
@@ -78,8 +78,18 @@ public class ScreenChanges : MonoBehaviour
         changeMusic();
     }
 
+    //Go to a specific scene by name
+    public static void staticSpecificScene(string name)
+    {
+        audio.Play();
+        float fadeTime = BeginFade(1);
+        System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
+        SceneManager.LoadScene(name);
+        changeMusic();
+    }
+
     //Change Music when you get to the gameplay
-    private void changeMusic()
+    private static void changeMusic()
     {
         if (SceneManager.GetActiveScene().name == "SelectRocketScreen")
         {

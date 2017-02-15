@@ -32,10 +32,15 @@ public class RocketBehavior : MonoBehaviour {
 	float time = 0f;
 	float timeMult = 0f;
 
+    //Win/lose conditions:
+    public int min_height = 5900;
+    public int max_height = 9900;
+    public ScreenChanges screenchanger = new ScreenChanges();
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		// Listens for lift off key
-		if (Input.GetKeyDown(KeyCode.Return)) {
+		if (Input.GetKeyDown(KeyCode.Return) && launch == false) {
 			
 
 			Debug.Log("Lift off!!!");
@@ -62,14 +67,16 @@ public class RocketBehavior : MonoBehaviour {
 		}
 
 		// Handles moving rocket
-		if (launch == true) {
+		if (launch == true) {   
             //Switch the GUI into Launch mode
             GUISwitch.launch_mode();
-			// update position of rocket
-			Vector3 move = trajectory (); 
+            // update position of rocket
+            float old_y_pos = transform.position.y;
+            Vector3 move = trajectory();
 			transform.position = move;
+            float new_y_pos = transform.position.y;
 
-			rotation();
+            rotation();
 
 			// update time
 			time += Time.deltaTime * timeMult;
@@ -79,6 +86,27 @@ public class RocketBehavior : MonoBehaviour {
 			// update position variables
 			prevPrevPos = prevPos;
 			prevPos = transform.position;
+
+            //Win/Lose Condition handling:
+            //If the rocket is going vertically downward...
+            if (new_y_pos - old_y_pos <= 0 && new_y_pos >= 0)
+            {
+                //If it's too low
+                if (new_y_pos < min_height)
+                {
+                    ScreenChanges.staticSpecificScene("Lose_Screen_Low");
+                }
+                //If it's too high
+                else if (new_y_pos > max_height)
+                {
+                    ScreenChanges.staticSpecificScene("Lose_Screen_High");
+                }
+                //If it's within the window of success
+                else
+                {
+                    ScreenChanges.staticSpecificScene("Win_Screen");
+                }
+            }
 		}
 
 		// Handles dropping fuel pods
