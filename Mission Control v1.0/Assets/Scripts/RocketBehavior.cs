@@ -43,7 +43,7 @@ public class RocketBehavior : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Return) && launch == false) {
 			
 
-			Debug.Log("Lift off!!!");
+			//Debug.Log("Lift off!!!");
 			launch = true;
 			//particleSyst.Play();
 			//particleSyst2.Play ();
@@ -56,8 +56,8 @@ public class RocketBehavior : MonoBehaviour {
 			velocity = RocketState.fuel * 5;
 			angleRad = RocketState.angle * ((float)Math.PI) / 180;
 			currAngle = RocketState.angle * ((float)Math.PI) / 180;
-			Debug.Log (RocketState.angle.ToString ());
-			Debug.Log (RocketState.fuel.ToString ());
+			//Debug.Log (RocketState.angle.ToString ());
+			//Debug.Log (RocketState.fuel.ToString ());
 
 			//Vector3 yTarget = Camera.main.transform.forward - (transform.forward * Vector3.Dot(Camera.transform.forward, transform.forward));
 			// Find the needed rotation to rotate y to y-target
@@ -94,16 +94,19 @@ public class RocketBehavior : MonoBehaviour {
                 //If it's too low
                 if (new_y_pos < min_height)
                 {
+                    launch = false;
                     ScreenChanges.staticSpecificScene("Lose_Screen_Low");
                 }
                 //If it's too high
                 else if (new_y_pos > max_height)
                 {
+                    launch = false;
                     ScreenChanges.staticSpecificScene("Lose_Screen_High");
                 }
                 //If it's within the window of success
                 else
                 {
+                    launch = false;
                     ScreenChanges.staticSpecificScene("Win_Screen");
                 }
             }
