@@ -8,7 +8,8 @@ public class ScreenChanges : MonoBehaviour
 {
 
     public Texture2D fadeOutTexture;
-    public static AudioSource audio;
+    public static AudioSource audio1;
+    public static AudioSource audio2;
     public static AudioSource music1;
     public static AudioSource music2;
     public static float fadeSpeed = 0.8f;
@@ -19,7 +20,8 @@ public class ScreenChanges : MonoBehaviour
 
     void Start()
     {
-        if (audio == null) { audio = GameObject.Find("Audio Source").GetComponent<AudioSource>(); DontDestroyOnLoad(audio); }
+        if (audio1 == null) { audio1 = GameObject.Find("Audio1").GetComponent<AudioSource>(); DontDestroyOnLoad(audio1); }
+        if (audio2 == null) { audio2 = GameObject.Find("Audio2").GetComponent<AudioSource>(); DontDestroyOnLoad(audio2); }
         if (music1 == null) { music1 = GameObject.Find("Music1").GetComponent<AudioSource>(); DontDestroyOnLoad(music1); }
         if (music2 == null) { music2 = GameObject.Find("Music2").GetComponent<AudioSource>(); DontDestroyOnLoad(music2); }
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
@@ -54,7 +56,7 @@ public class ScreenChanges : MonoBehaviour
     //Go to the next scene
     public void NextScene()
     {
-        if (audio != null) { audio.Play(); }
+        if (audio1 != null) { audio1.Play(); }
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -65,7 +67,7 @@ public class ScreenChanges : MonoBehaviour
     //Go to the last scene
     public void LastScene()
     {
-        if (audio != null) { audio.Play(); }
+        if (audio1 != null) { audio1.Play(); }
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1); ;
@@ -74,7 +76,7 @@ public class ScreenChanges : MonoBehaviour
     //Go to a specific scene by name
     public void SpecificScene(string name)
     {
-        if (audio != null) { audio.Play(); }
+        if (audio1 != null) { audio1.Play(); }
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
         SceneManager.LoadScene(name);
@@ -84,7 +86,7 @@ public class ScreenChanges : MonoBehaviour
     //Go to a specific scene by name
     public static void staticSpecificScene(string name)
     {
-        if (audio != null) { audio.Play(); }
+        if (audio1 != null) { audio1.Play(); }
         float fadeTime = BeginFade(1);
         System.Threading.Thread.Sleep(Mathf.CeilToInt(fadeTime));
         SceneManager.LoadScene(name);
@@ -103,6 +105,18 @@ public class ScreenChanges : MonoBehaviour
         {
             music2.Stop();
             music1.Play();
+        }
+    }
+
+    public static void launch_sounds()
+    {
+        if (audio2.isPlaying == false)
+        {
+            audio2.Play();
+        }
+        else
+        {
+            audio2.Stop();
         }
     }
 }

@@ -38,11 +38,6 @@ public class KeyListener : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             Application.Quit();
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            if (Application.loadedLevel != 0) {
-                Application.LoadLevel(Application.loadedLevel - 1);
-            }
-        }
         if (Input.GetKeyDown(KeyCode.A)) {
             Selector.prev_option();
         }

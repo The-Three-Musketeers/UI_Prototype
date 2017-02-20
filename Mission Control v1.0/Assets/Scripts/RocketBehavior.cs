@@ -45,6 +45,7 @@ public class RocketBehavior : MonoBehaviour {
 
 			//Debug.Log("Lift off!!!");
 			launch = true;
+            ScreenChanges.launch_sounds();
 			//particleSyst.Play();
 			//particleSyst2.Play ();
 			initialX = transform.position.x;
@@ -89,24 +90,28 @@ public class RocketBehavior : MonoBehaviour {
 
             //Win/Lose Condition handling:
             //If the rocket is going vertically downward...
-            if (new_y_pos - old_y_pos <= 0 && new_y_pos >= 0)
+            print(new_y_pos - old_y_pos);
+            if (new_y_pos - old_y_pos <= -10 )
             {
                 //If it's too low
                 if (new_y_pos < min_height)
                 {
                     launch = false;
+                    ScreenChanges.launch_sounds();
                     ScreenChanges.staticSpecificScene("Lose_Screen_Low");
                 }
                 //If it's too high
                 else if (new_y_pos > max_height)
                 {
                     launch = false;
+                    ScreenChanges.launch_sounds();
                     ScreenChanges.staticSpecificScene("Lose_Screen_High");
                 }
                 //If it's within the window of success
                 else
                 {
                     launch = false;
+                    ScreenChanges.launch_sounds();
                     ScreenChanges.staticSpecificScene("Win_Screen");
                 }
             }
