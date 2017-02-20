@@ -5,7 +5,7 @@ using System;
 
 public class RocketBehavior : MonoBehaviour {
 
-    //public ParticleSystem particleSyst = null;
+    public ParticleSystem particleSyst = null;
     //public ParticleSystem particleSyst2 = null;
     public Transform cam = null;
 	int numFuelPods = 3;
@@ -45,8 +45,8 @@ public class RocketBehavior : MonoBehaviour {
 
 			//Debug.Log("Lift off!!!");
 			launch = true;
+			particleSyst.Play();
             ScreenChanges.launch_sounds();
-			//particleSyst.Play();
 			//particleSyst2.Play ();
 			initialX = transform.position.x;
 			initialY = transform.position.y;
@@ -55,8 +55,8 @@ public class RocketBehavior : MonoBehaviour {
 			rocketZ = transform.position.z;
 
 			velocity = RocketState.fuel * 5;
-			angleRad = RocketState.angle * ((float)Math.PI) / 180;
-			currAngle = RocketState.angle * ((float)Math.PI) / 180;
+			angleRad = (180-RocketState.angle) * ((float)Math.PI) / 180;
+			currAngle = (180-RocketState.angle) * ((float)Math.PI) / 180;
 			//Debug.Log (RocketState.angle.ToString ());
 			//Debug.Log (RocketState.fuel.ToString ());
 
